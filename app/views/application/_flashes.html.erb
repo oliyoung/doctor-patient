@@ -1,0 +1,9 @@
+<%- if flash.any? %>
+  <div id="flash">
+    <%- flash.each do |key, value| %>
+      <div class="flash-<%= key %>">
+        <%= html_escape(value) %>
+      </div>
+    <%- end %>
+  </div>
+<%- end %>

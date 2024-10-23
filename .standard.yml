@@ -1,0 +1,11 @@
+parallel: true
+ruby_version: 3.3
+plugins:
+  - standard-rails
+ignore:
+  - "app/**/**/":
+    - Layout/SpaceInsideHashLiteralBraces
+  - "config/**/**":
+    - Layout/SpaceInsideHashLiteralBraces
+  - "spec/**/**":
+    - Layout/SpaceInsideHashLiteralBraces
