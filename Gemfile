@@ -40,6 +40,7 @@ group :development do
   gem "foreman", "~> 0.88.1"
   gem "rubocop-rails-omakase", require: false
   gem "web-console"
+  gem "annotate"
 end
 
 group :test do
