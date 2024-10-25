@@ -15,6 +15,8 @@ class Appointment < ApplicationRecord
   belongs_to :doctor_profile
   belongs_to :patient_profile
 
+  has_many :notes
+
   validates :appointment_at, presence: true
   validates :clinic, presence: true
   validates :purpose, presence: true

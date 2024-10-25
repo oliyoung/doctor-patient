@@ -1,10 +1,16 @@
 FactoryBot.define do
+  factory :note do
+    appointment
+    kind { "MyString" }
+    body { Faker::Lorem.paragraph }
+  end
+
   factory :appointment do
     doctor_profile
     patient_profile
     appointment_at { rand(1..100).days.from_now }
-    clinic { "MyString" }
-    purpose { "MyString" }
+    clinic { "Clinic A" }
+    purpose { "checkup" }
   end
 
   factory :doctor_profile do

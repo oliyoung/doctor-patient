@@ -156,6 +156,20 @@ CREATE TABLE public.good_jobs (
 
 
 --
+-- Name: notes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.notes (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    appointment_id uuid NOT NULL,
+    kind character varying,
+    body text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: patient_checkins; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -278,6 +292,14 @@ ALTER TABLE ONLY public.good_job_settings
 
 ALTER TABLE ONLY public.good_jobs
     ADD CONSTRAINT good_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notes notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.notes
+    ADD CONSTRAINT notes_pkey PRIMARY KEY (id);
 
 
 --
@@ -453,6 +475,13 @@ CREATE INDEX index_good_jobs_on_scheduled_at ON public.good_jobs USING btree (sc
 
 
 --
+-- Name: index_notes_on_appointment_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notes_on_appointment_id ON public.notes USING btree (appointment_id);
+
+
+--
 -- Name: index_patient_checkins_on_doctor_profile_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -478,6 +507,14 @@ CREATE INDEX index_patient_profiles_on_user_id ON public.patient_profiles USING 
 --
 
 CREATE INDEX index_users_on_email ON public.users USING btree (email);
+
+
+--
+-- Name: notes fk_rails_04522aa908; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.notes
+    ADD CONSTRAINT fk_rails_04522aa908 FOREIGN KEY (appointment_id) REFERENCES public.appointments(id);
 
 
 --
@@ -535,6 +572,7 @@ ALTER TABLE ONLY public.doctor_profiles
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241025103844'),
 ('20241025102820'),
 ('20240913021938'),
 ('20240913021842'),
