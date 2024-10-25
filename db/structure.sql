@@ -22,10 +22,10 @@ CREATE TABLE public.appointments (
     doctor_profile_id uuid NOT NULL,
     patient_profile_id uuid NOT NULL,
     appointment_at timestamp(6) without time zone,
-    clinic character varying,
-    purpose character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    clinic integer DEFAULT 0,
+    purpose integer DEFAULT 0
 );
 
 
@@ -176,12 +176,12 @@ CREATE TABLE public.notes (
 CREATE TABLE public.patient_checkins (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     patient_profile_id uuid NOT NULL,
-    doctor_profile_id uuid NOT NULL,
     appointment_date timestamp without time zone NOT NULL,
     side_effects text,
     questions_for_doctor text,
     wants_to_change_dose boolean,
     current_weight double precision,
+    doctor_profile_id uuid NOT NULL,
     medication_prescribed text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -572,6 +572,7 @@ ALTER TABLE ONLY public.doctor_profiles
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241025114746'),
 ('20241025103844'),
 ('20241025102820'),
 ('20240913021938'),

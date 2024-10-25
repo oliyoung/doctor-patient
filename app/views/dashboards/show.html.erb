@@ -1,2 +1,11 @@
-<h1>Dashboards#show</h1>
-<p>Find me in app/views/dashboards/show.html.erb</p>
+<div id="appointments">
+    <%= turbo_frame_tag "appointments" do %>
+        <%= render partial: @appointments %>
+    <% end %>
+</div>
+
+<div id="new_appointment">
+    <%= turbo_frame_tag Appointment.new do %>
+        <%= link_to t("appointment.new"), new_appointment_path, data: { turbo_frame: dom_id(Appointment.new) } %>
+    <% end %>
+</div>

@@ -17,6 +17,7 @@
 class PatientProfile < ApplicationRecord
   belongs_to :user
   has_many :patient_checkins, dependent: :destroy
+  has_many :appointments
 
   validates :age, numericality: true, presence: true
 

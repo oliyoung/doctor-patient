@@ -9,8 +9,8 @@ FactoryBot.define do
     doctor_profile
     patient_profile
     appointment_at { rand(1..100).days.from_now }
-    clinic { "Clinic A" }
-    purpose { "checkup" }
+    clinic { Appointment.clinics.keys.sample }
+    purpose { Appointment.purposes.keys.sample }
   end
 
   factory :doctor_profile do
@@ -29,9 +29,9 @@ FactoryBot.define do
   end
 
   factory :user do
-    first_name { "Kate" }
-    last_name { "Bishop" }
-    sequence(:email) { |n| "kate-#{n}@example.com" }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    email { Faker::Internet.email }
 
     trait :patient do
       after(:create) { |u| create(:patient_profile, user: u) }

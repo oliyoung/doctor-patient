@@ -1,0 +1,3 @@
+<%= turbo_stream.replace @appointment do %>
+    <%= render partial: current_user.patient_profile.appointments %>
+<% end %>
