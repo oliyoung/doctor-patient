@@ -14,6 +14,22 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: appointments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.appointments (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    doctor_profile_id uuid NOT NULL,
+    patient_profile_id uuid NOT NULL,
+    appointment_at timestamp(6) without time zone,
+    clinic character varying,
+    purpose character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -146,12 +162,12 @@ CREATE TABLE public.good_jobs (
 CREATE TABLE public.patient_checkins (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     patient_profile_id uuid NOT NULL,
+    doctor_profile_id uuid NOT NULL,
     appointment_date timestamp without time zone NOT NULL,
     side_effects text,
     questions_for_doctor text,
     wants_to_change_dose boolean,
     current_weight double precision,
-    doctor_profile_id uuid NOT NULL,
     medication_prescribed text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -198,6 +214,14 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
+
+
+--
+-- Name: appointments appointments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.appointments
+    ADD CONSTRAINT appointments_pkey PRIMARY KEY (id);
 
 
 --
@@ -286,6 +310,20 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_appointments_on_doctor_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_appointments_on_doctor_profile_id ON public.appointments USING btree (doctor_profile_id);
+
+
+--
+-- Name: index_appointments_on_patient_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_appointments_on_patient_profile_id ON public.appointments USING btree (patient_profile_id);
 
 
 --
@@ -459,11 +497,27 @@ ALTER TABLE ONLY public.patient_checkins
 
 
 --
+-- Name: appointments fk_rails_7338d5166f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.appointments
+    ADD CONSTRAINT fk_rails_7338d5166f FOREIGN KEY (doctor_profile_id) REFERENCES public.doctor_profiles(id);
+
+
+--
 -- Name: patient_profiles fk_rails_8e9e3b0e69; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.patient_profiles
     ADD CONSTRAINT fk_rails_8e9e3b0e69 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: appointments fk_rails_bf4d00ebc3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.appointments
+    ADD CONSTRAINT fk_rails_bf4d00ebc3 FOREIGN KEY (patient_profile_id) REFERENCES public.patient_profiles(id);
 
 
 --
@@ -481,6 +535,7 @@ ALTER TABLE ONLY public.doctor_profiles
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241025102820'),
 ('20240913021938'),
 ('20240913021842'),
 ('20240913021221'),

@@ -1,4 +1,12 @@
 FactoryBot.define do
+  factory :appointment do
+    doctor_profile
+    patient_profile
+    appointment_at { rand(1..100).days.from_now }
+    clinic { "MyString" }
+    purpose { "MyString" }
+  end
+
   factory :doctor_profile do
     user
   end
