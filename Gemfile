@@ -25,6 +25,7 @@ gem "twilio-ruby"
 gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 
 group :development, :test do
+  gem "pry"
   gem "faker"
   gem "awesome_print"
   gem "debug", platforms: %i[mri windows], require: "debug/prelude"
