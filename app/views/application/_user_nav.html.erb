@@ -9,10 +9,8 @@
       <%- end %>
       <div class="session">
         <%- if current_user %>
-          <%= link_to current_user.first_name, "#" %>
+          <%= link_to current_user.first_name, profile_path %>
           <%= link_to t(".logout"), logout_path, data: { turbo_method: :delete } %>
-        <%- else %>
-          <%= link_to t(".login"), login_path %>
         <%- end %>
       </div>
     </div>

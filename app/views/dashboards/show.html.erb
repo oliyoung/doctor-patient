@@ -8,7 +8,7 @@
             <%= turbo_frame_tag Appointment.new do %>
                 <% if @appointments.empty? %>
                     <div class="empty-state">
-                        <p><%= t("appointments.empty-state") %></p>
+                        <p><%= t("appointments.empty_state") %></p>
                     </div>
                 <% end %>
             <% end %>
@@ -22,6 +22,38 @@
             <h1><%= PatientProfile.model_name.human %></h1>
         </div>
         <div class="box-content">
+            <dl>
+                <dt><%= User.human_attribute_name('first_name') %></dt>
+                <dd><%= current_user.first_name %></dd>
+                <dt><%= User.human_attribute_name('last_name') %></dt>
+                <dd><%= current_user.last_name %></dd>
+                <dt><%= User.human_attribute_name('email') %></dt>
+                <dd><%= current_user.email %></dd>
+                <dt><%= PatientProfile.human_attribute_name('phone_number') %></dt>
+                <dd><%= profile.phone_number %></dd>
+                <dt><%= PatientProfile.human_attribute_name('date_of_birth') %></dt>
+                <dd><%= profile.date_of_birth %></dd>
+                <dt><%= PatientProfile.human_attribute_name('age') %></dt>
+                <dd><%= profile.age %></dd>
+                <dt><%= PatientProfile.human_attribute_name('starting_weight') %></dt>
+                <dd><%= profile.starting_weight %></dd>
+                <dt><%= PatientProfile.human_attribute_name('goal_weight') %></dt>
+                <dd><%= profile.goal_weight %></dd>
+                <dt><%= PatientProfile.human_attribute_name('height_in_inches') %></dt>
+                <dd><%= profile.height_in_inches %></dd>
+            </dl>
+        </div>
+    </div>
+    <div class="box col-span-2">
+        <div class="box-header">
+            <h1><%= Note.model_name.human.pluralize %></h1>
+        </div>
+        <div class="box-content">
+            <% if @notes.empty? %>
+                <div class="empty-state">
+                    <p><%= t("notes.empty_state") %></p>
+                </div>
+            <% end %>
             <%= turbo_frame_tag "notes" do %>
                 <%= render partial: @notes %>
             <% end %>

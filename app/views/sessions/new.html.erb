@@ -1,8 +1,7 @@
 <div id="login_form" class="box">
-  <img src="https://orderlymeds.com/assets/om-logo-h-dark-f909c166.svg" />
   <h1><%= t(".login") %></h1>
-  <%= simple_form_for :session, url: sessions_path do |f| %>
-    <%= f.input :email %>
-    <%= f.submit t(".login") %>
+  <%= simple_form_for :session, url: sessions_path do |form| %>
+    <%= form.input :email %>
+    <%= form.submit t(".login") %>
   <% end %>
 </div>

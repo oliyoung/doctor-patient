@@ -1,3 +1,8 @@
 class ProtectedController < ApplicationController
   before_action :require_login
+  helper_method :profile
+
+  def profile
+    current_user.patient_profile
+  end
 end
