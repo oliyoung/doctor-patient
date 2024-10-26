@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.translation_missing {
+  @apply bg-fuchsia-500 text-white;
+}
+
 .empty-state {
   @apply text-slate-300;
 }

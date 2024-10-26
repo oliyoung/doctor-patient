@@ -2,13 +2,13 @@
     <div id="appointments" class="box">
         <div class="box-header">
             <h1><%= Appointment.model_name.human.pluralize %></h1>
-             <%= link_to t("appointment.new"), new_appointment_path, class:'button', data: { turbo_frame: dom_id(Appointment.new) } %>
+             <%= link_to t("appointments.new"), new_appointment_path, class:'button', data: { turbo_frame: dom_id(Appointment.new) } %>
         </div>
         <div class="box-content">
             <%= turbo_frame_tag Appointment.new %>
             <% if @appointments.empty? %>
                 <div class="empty-state">
-                    <p><%= t("appointments.empty-state") %></p>
+                    <p><%= t("appointments.empty_state") %></p>
                 </div>
             <% end %>
             <%= turbo_frame_tag "appointments" do %>

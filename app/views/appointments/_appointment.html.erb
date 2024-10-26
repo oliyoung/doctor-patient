@@ -1,13 +1,13 @@
 <%= turbo_frame_tag appointment do %>
     <div class="list-item" id="<%= dom_id(appointment) %>">
         <div class="body">
-            <h2><%= l appointment.appointment_at, format: :short %></h2>
+            <h2><%= link_to l(appointment.appointment_at, format: :short), appointment_path(appointment) %></h2>
             <h3><%= appointment.purpose.capitalize %></h3>
             <p>at <span class="clinic"><%= appointment.clinic %></span> <%= Appointment.human_attribute_name(:clinic) %> with Dr <%= appointment.doctor_profile.last_name %></p>
         </div>
         <div class="actions">
-            <%= link_to t('edit'), edit_appointment_path(appointment), class:'button' %>
-            <%= link_to t('cancel'), appointment_path(appointment), class:'button button-secondary',  data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+            <%= link_to t('appointments.edit'), edit_appointment_path(appointment), class:'button' %>
+            <%= link_to t('appointments.destroy'), appointment_path(appointment), class:'button button-secondary',  data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
         </div>
     </div>
 <% end %>

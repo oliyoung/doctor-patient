@@ -3,6 +3,7 @@ en:
     user_nav:
       login: Sign in
       logout: Log out
+      dashboard: Dashboard
   flash:
     unauthorised: Unauthorised
   sessions:
@@ -16,6 +17,9 @@ en:
     formats:
       short: "%b %d, %Y"
   appointments:
+    new: Book
+    edit: Change
+    destroy: Cancel
     empty_state: No Appointments Scheduled
     form:
       submit: Book
