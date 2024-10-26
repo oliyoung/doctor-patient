@@ -1,11 +1,30 @@
-<div id="appointments">
-    <%= turbo_frame_tag "appointments" do %>
-        <%= render partial: @appointments %>
-    <% end %>
-</div>
-
-<div id="new_appointment">
-    <%= turbo_frame_tag Appointment.new do %>
-        <%= link_to t("appointment.new"), new_appointment_path, data: { turbo_frame: dom_id(Appointment.new) } %>
-    <% end %>
+<div class="grid grid-cols-2 gap-4">
+    <div class="box">
+        <div class="box-header">
+            <h1><%= Appointment.model_name.human.pluralize %></h1>
+             <%= link_to t("appointment.new"), new_appointment_path, class:'button', data: { turbo_frame: dom_id(Appointment.new) } %>
+        </div>
+        <div class="box-content">
+            <%= turbo_frame_tag Appointment.new do %>
+                <% if @appointments.empty? %>
+                    <div class="empty-state">
+                        <p><%= t("appointments.empty-state") %></p>
+                    </div>
+                <% end %>
+            <% end %>
+            <%= turbo_frame_tag "appointments" do %>
+                <%= render partial: @appointments %>
+            <% end %>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-header">
+            <h1><%= PatientProfile.model_name.human %></h1>
+        </div>
+        <div class="box-content">
+            <%= turbo_frame_tag "notes" do %>
+                <%= render partial: @notes %>
+            <% end %>
+        </div>
+    </div>
 </div>

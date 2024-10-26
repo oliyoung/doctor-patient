@@ -1,23 +1,7 @@
-<%= form_with model: appointment do |form| %>
-<div class="flex flex-col">
-    <div class="form-row">
-        <%= form.label :doctor_profile_id %>
-        <%= form.select :doctor_profile_id, DoctorProfile.all.map{|doctor| ["Dr #{doctor.last_name}", doctor.id]} %>
-    </div>
-    <div class="form-row">
-        <%= form.label :appointment_at %>
-        <%= form.date_select :appointment_at %>
-    </div>
-    <div class="form-row">
-        <%= form.label :purpose %>
-        <%= form.select :purpose, Appointment.purposes.keys %>
-    </div>
-    <div class="form-row">
-        <%= form.label :clinic %>
-        <%= form.select :clinic, Appointment.clinics.keys %>
-    </div>
-    <div class="form-row">
-        <%= form.submit %>
-    </div>
-</div>
+<%= simple_form_for appointment do |form| %>
+    <%= form.input :doctor_profile_id, collection: DoctorProfile.all.map{|doctor| ["Dr #{doctor.last_name}", doctor.id]} %>
+    <%= form.input :appointment_at %>
+    <%= form.input :purpose, collection: Appointment.purposes.keys.map{|key| [t(".#{key}"), key]} %>
+    <%= form.input :clinic, collection: Appointment.clinics.keys.map{|key| [t(".#{key}"), key]} %>
+    <%= form.submit t(".submit") %>
 <% end %>

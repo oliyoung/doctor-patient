@@ -15,12 +15,15 @@ en:
   time:
     formats:
       short: "%b %d, %Y"
-
+  appointments:
+    form:
+      submit: Book
   activerecord:
     models:
       appointment: Appointment
     attributes:
       appointment:
+        doctor_profile: Doctor
         doctor_profile_id: Doctor
         patient_profile_id: Patient
         apppointment_at: Date

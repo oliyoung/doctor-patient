@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full bg-slate-50">
   <head>
     <title>Orderly Meds - Patient Portal</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "tailwind" %>
     <%= stylesheet_link_tag "application" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
-    <%= render "flashes" %>
     <%= render "user_nav" %>
-    <%= yield %>
+    <div class="container mx-auto max-w-7xl p-4 sm:px-6 lg:px-8">
+      <%= render "flashes" %>
+      <%= yield %>
+    </div>
   </body>
 </html>
 

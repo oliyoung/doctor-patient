@@ -1,7 +1,7 @@
-<%= turbo_stream.replace dom_id(Appointment.new) do %>
-    <%= link_to t("appointment.new"), new_appointment_path, data: { turbo_frame: dom_id(Appointment.new) } %>
+<%= turbo_stream.append "appointments" do %>
+    <%= render partial: @appointment %>
 <% end %>
 
-<%= turbo_stream.replace "appointments" do %>
-    <%= render partial: current_user.patient_profile.appointments %>
+<%= turbo_stream.replace Appointment.new do %>
+   <%= turbo_frame_tag Appointment.new %>
 <% end %>

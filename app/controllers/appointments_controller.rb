@@ -1,4 +1,5 @@
 class AppointmentsController < ProtectedController
+  before_action :set_appointments
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -14,7 +15,7 @@ class AppointmentsController < ProtectedController
   end
 
   def create
-    @appointment = current_user.patient_profile.appointments.build safe_params
+    @appointment = @appointments.build safe_params
     if @appointment.save
       respond_to do |format|
         format.html { redirect_to appointments_path }
@@ -49,8 +50,12 @@ class AppointmentsController < ProtectedController
 
   private
 
+  def set_appointments
+    @appointments = current_user.patient_profile.appointments
+  end
+
   def set_appointment
-    @appointment = current_user.patient_profile.appointments.find(params[:id])
+    @appointment = @appointments.find(params[:id])
   end
 
   def safe_params

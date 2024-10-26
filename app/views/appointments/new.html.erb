@@ -1,5 +1,9 @@
-<div>
-  <%= turbo_frame_tag Appointment.new do %>
-    <%= render "form", appointment: Appointment.new %>
-  <% end %>
+<div class="grid grid-cols-2 gap-4">
+    <div id="appointments" class="box">
+        <div class="box-content">
+          <%= turbo_frame_tag Appointment.new do %>
+            <%= render "form", appointment: Appointment.new %>
+          <% end %>
+        </div>
+    </div>
 </div>
