@@ -15,7 +15,7 @@ class AppointmentsController < ProtectedController
   end
 
   def create
-    @appointment = @appointments.build safe_params
+    @appointment = @appointments.build appointment_params
     if @appointment.save
       respond_to do |format|
         format.html { redirect_to appointments_path }
@@ -27,7 +27,7 @@ class AppointmentsController < ProtectedController
   end
 
   def update
-    if @appointment.update safe_params
+    if @appointment.update appointment_params
       respond_to do |format|
         format.html { redirect_to appointments_path }
         format.turbo_stream
@@ -58,7 +58,7 @@ class AppointmentsController < ProtectedController
     @appointment = @appointments.find(params[:id])
   end
 
-  def safe_params
+  def appointment_params
     params.require(:appointment).permit(:doctor_profile_id, :clinic, :purpose, :appointment_at)
   end
 end
