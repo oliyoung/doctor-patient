@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :note do
     appointment
-    kind { "MyString" }
     body { Faker::Lorem.paragraph }
   end
 
