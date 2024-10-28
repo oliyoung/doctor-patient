@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.feature "user opens dashboard" do
   scenario "and books an appointment, and cancels" do
-    user = FactoryBot.create(:user, :patient)
-    doctor = FactoryBot.create(:user, :doctor)
+    user = create(:user, :patient)
+    doctor = create(:user, :doctor)
     visit root_path
     expect(page).not_to have_text(user.first_name)
     expect(page).not_to have_text t("application.user_nav.logout")
@@ -41,8 +41,8 @@ RSpec.feature "user opens dashboard" do
   end
 
   scenario "and books an appointment, and edits" do
-    user = FactoryBot.create(:user, :patient)
-    doctor = FactoryBot.create(:user, :doctor)
+    user = create(:user, :patient)
+    doctor = create(:user, :doctor)
     visit root_path
     expect(page).not_to have_text(user.first_name)
     expect(page).not_to have_text t("application.user_nav.logout")
