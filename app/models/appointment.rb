@@ -21,6 +21,16 @@ class Appointment < ApplicationRecord
   validates :clinic, presence: true
   validates :purpose, presence: true
 
-  enum :clinic, ["Wakanda", "Asgard", "K'un-Lun", "Latveria", "Genosha", "Savage Land", "Attilan", "Knowhere", "The Raft", "Krakoa"]
+  enum :clinic, [
+    "Asgard",
+    "Attilan",
+    "Genosha",
+    "K'un-Lun",
+    "Knowhere",
+    "Krakoa",
+    "Latveria",
+    "Savage Land",
+    "The Raft",
+    "Wakanda"]
   enum :purpose, ["checkup", "vaccination", "diagnosis", "treatment", "referral"]
 end
