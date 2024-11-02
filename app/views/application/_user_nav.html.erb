@@ -5,6 +5,7 @@
         <div class="links">
             <%= link_to t(".dashboard"), root_path %>
             <%= link_to Appointment.model_name.human.pluralize, appointments_path  %>
+            <%= link_to Conversation.model_name.human.pluralize, conversations_path  %>
         </div>
       <%- end %>
       <div class="session">

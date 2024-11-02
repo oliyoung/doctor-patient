@@ -15,6 +15,8 @@ RSpec.describe User do
   context "associations" do
     it { is_expected.to have_one(:patient_profile) }
     it { is_expected.to have_one(:doctor_profile) }
+    it { is_expected.to has_and_belongs_to_many(:conversations) }
+    it { is_expected.to has_many(:messages) }
   end
 
   context "validations" do

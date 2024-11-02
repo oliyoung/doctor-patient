@@ -1,6 +1,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -36,6 +37,31 @@ CREATE TABLE public.appointments (
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: conversations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.conversations (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    name character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: conversations_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.conversations_users (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    conversation_id uuid NOT NULL,
+    user_id uuid NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -156,6 +182,20 @@ CREATE TABLE public.good_jobs (
 
 
 --
+-- Name: messages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.messages (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    conversation_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    body character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: notes; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -247,6 +287,22 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: conversations conversations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversations
+    ADD CONSTRAINT conversations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: conversations_users conversations_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversations_users
+    ADD CONSTRAINT conversations_users_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: doctor_profiles doctor_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -292,6 +348,14 @@ ALTER TABLE ONLY public.good_job_settings
 
 ALTER TABLE ONLY public.good_jobs
     ADD CONSTRAINT good_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
 
 
 --
@@ -346,6 +410,27 @@ CREATE INDEX index_appointments_on_doctor_profile_id ON public.appointments USIN
 --
 
 CREATE INDEX index_appointments_on_patient_profile_id ON public.appointments USING btree (patient_profile_id);
+
+
+--
+-- Name: index_conversations_users_on_conversation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_conversations_users_on_conversation_id ON public.conversations_users USING btree (conversation_id);
+
+
+--
+-- Name: index_conversations_users_on_conversation_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_conversations_users_on_conversation_id_and_user_id ON public.conversations_users USING btree (conversation_id, user_id);
+
+
+--
+-- Name: index_conversations_users_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_conversations_users_on_user_id ON public.conversations_users USING btree (user_id);
 
 
 --
@@ -475,6 +560,20 @@ CREATE INDEX index_good_jobs_on_scheduled_at ON public.good_jobs USING btree (sc
 
 
 --
+-- Name: index_messages_on_conversation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_messages_on_conversation_id ON public.messages USING btree (conversation_id);
+
+
+--
+-- Name: index_messages_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_messages_on_user_id ON public.messages USING btree (user_id);
+
+
+--
 -- Name: index_notes_on_appointment_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -518,11 +617,27 @@ ALTER TABLE ONLY public.notes
 
 
 --
+-- Name: messages fk_rails_273a25a7a6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT fk_rails_273a25a7a6 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: patient_checkins fk_rails_28da0f1d5d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.patient_checkins
     ADD CONSTRAINT fk_rails_28da0f1d5d FOREIGN KEY (doctor_profile_id) REFERENCES public.doctor_profiles(id);
+
+
+--
+-- Name: conversations_users fk_rails_50022aa573; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversations_users
+    ADD CONSTRAINT fk_rails_50022aa573 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -539,6 +654,14 @@ ALTER TABLE ONLY public.patient_checkins
 
 ALTER TABLE ONLY public.appointments
     ADD CONSTRAINT fk_rails_7338d5166f FOREIGN KEY (doctor_profile_id) REFERENCES public.doctor_profiles(id);
+
+
+--
+-- Name: messages fk_rails_7f927086d2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT fk_rails_7f927086d2 FOREIGN KEY (conversation_id) REFERENCES public.conversations(id);
 
 
 --
@@ -566,12 +689,23 @@ ALTER TABLE ONLY public.doctor_profiles
 
 
 --
+-- Name: conversations_users fk_rails_fa156dfe4c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.conversations_users
+    ADD CONSTRAINT fk_rails_fa156dfe4c FOREIGN KEY (conversation_id) REFERENCES public.conversations(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241030232434'),
+('20241030231720'),
+('20241030231650'),
 ('20241025114746'),
 ('20241025103844'),
 ('20241025102820'),

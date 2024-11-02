@@ -6,10 +6,10 @@
 #  doctor_profile_id  :uuid             not null
 #  patient_profile_id :uuid             not null
 #  appointment_at     :datetime
-#  clinic             :string
-#  purpose            :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  clinic             :integer          default("Asgard")
+#  purpose            :integer          default("checkup")
 #
 class Appointment < ApplicationRecord
   belongs_to :doctor_profile

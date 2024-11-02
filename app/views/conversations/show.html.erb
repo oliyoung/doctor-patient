@@ -1,0 +1,34 @@
+<div class="grid grid-cols-[180px,1fr]">
+
+  <div class="box conversations">
+    <div class="box-header">
+      <%= t(".conversations") %>
+    </div>
+      <%= render partial: @conversations %>
+    <div>
+
+    </div>
+  </div>
+
+  <div class="box messages">
+    <div class="box-header">
+      <%= t(".messages") %>
+    </div>
+    <% if @conversation.nil? %>
+      <div class="zero-state px-auto">
+        <%= t(".zero-state.conversations") %>
+      </div>
+    <% else %>
+      <div>
+        With <%= @conversation.users.map(&:to_s).to_sentence %>
+      </div>
+      <% if @messages.empty? %>
+        <%= t(".zero-state.messages") %>
+      <% else %>
+        <%= render partial: @messages.order(created_at: :desc)  %>
+      <% end %>
+      <%= render 'messages/form' %>
+    <% end %>
+  </div>
+
+</div>

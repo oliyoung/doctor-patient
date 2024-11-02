@@ -1,4 +1,14 @@
 FactoryBot.define do
+  factory :message do
+    conversation { nil }
+    user { nil }
+    body { "MyString" }
+  end
+
+  factory :conversation do
+    name { "MyString" }
+  end
+
   factory :note do
     appointment
     body { Faker::Lorem.paragraph }
